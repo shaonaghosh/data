@@ -14,10 +14,8 @@ error(nargchk(1, 3, nargin'));
 
 if (nargin < 3)
     d = 256; %Default dimensionality 
-    %d = 617;
 elseif (3 == nargin)
     %reserve first two columns for labels
-    %data = data(:,3:end);
     data = data(:,2:end); %changed from above as now distances computed outside
     
 end
@@ -25,13 +23,12 @@ end
 
 %Distance matrix
 distancemat1 = zeros(n,n);
-%distancemat2 = zeros(n,n);
+
  
-% sigmad  = 380;%Reference :Semi supervised learning using Gaussian fields and Harmonic functions
-% sigmad = 380^2;
+% sigmad  = 380 ^ 2;%Reference :Semi supervised learning using Gaussian fields and Harmonic functions
 sigmad = 1; %We need unweighted graph
 
-
+%Method 1
 %Find squared euclidean distance between each pair - Faster than faster
 %alternative below
 tic
@@ -56,36 +53,5 @@ toc
 %D = bsxfun(@plus,dot(data,data,1)',dot(data,data,1))-2*(data'*data)
 %toc
 
-%Test code
-distancemat1;
-
-
-%Alternative method3 for large dataset, can be reduced time complexity if
-%not space, need to test for large dataset though
-% 
-% tic
-% datacpy = zeros(3,3);
-% sums = zeros(n,1);
-% for i = 1:n
-%    nodei  = data(i,:);
-%    datacpy = bsxfun(@minus,data,nodei);
-%  
-%    datacpy = bsxfun(@power,datacpy,2);
-     %datacpy = bsxfun(@,datacpy,2)
-     
-%    sums = sqrt(sum(datacpy,2));
-     %sums = sum(datacpy,2);
-%    distancemat2(i,:) = sums';
-% end
-% 
-% distancemat2
-% toc
-%end
-
-%Save the diatances to file:
-%filesavepth = fullfile('C:\Users\','distance.mat');
-% save(fullfile(pwd,'distance.mat'), 'distancemat1');
-
-% fprintf( 'Distances saved\n')
 
 end
